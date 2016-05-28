@@ -1,15 +1,19 @@
-var express = require('express');
-var path = require('path');
-// var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express'),
+    path = require('path'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    passport = require('passport');
 
 var todos = require('./routes/todos');
+var login = require('./routes/login');
 
 require('./config/database')('mongodb://localhost:27017/todosDB');
 
 var app = express();
+
+require('./config/passport')(app);
 
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
@@ -26,9 +30,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
+
+app.use(session({ secret: 'Linkar is awesome!' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/todos', todos);
+app.use('/login', login);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
