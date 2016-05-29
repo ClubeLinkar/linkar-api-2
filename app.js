@@ -9,7 +9,7 @@ var express = require('express'),
 var todos = require('./routes/todos');
 var login = require('./routes/login');
 
-require('./config/database')('mongodb://localhost:27017/todosDB');
+require('./config/database')('mongodb://localhost:27017/linkar');
 
 var app = express();
 
@@ -39,6 +39,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/todos', todos);
 app.use('/login', login);
+
+// send to facebook to do the authentication
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+// handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback',
+	passport.authenticate('facebook', {
+		successRedirect : '/profile',
+		failureRedirect : '/'
+	})
+);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
