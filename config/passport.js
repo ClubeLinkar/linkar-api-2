@@ -2,6 +2,7 @@ var passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy;
 FacebookStrategy = require('passport-facebook').Strategy,
 User = require('../models/user');
+Company = require('../models/company');
 
 module.exports = function (app) {
 
@@ -13,7 +14,7 @@ module.exports = function (app) {
     done(null, user);
   });
 
-  passport.use(new LocalStrategy({
+  passport.use('user-auth', new LocalStrategy({
       usernameField: 'email',
       passwordField: 'password'
     }, function(email, password, done) {
@@ -26,9 +27,36 @@ module.exports = function (app) {
           return done(null, false, { message: 'Incorrect username.' });
         }
 
-        // if (!user.validPassword(password)) {
-        //   return done(null, false, { message: 'Incorrect password.' });
-        // }
+        user.comparePassword(password, function (err, isValid) {
+          if (err) throw err;
+
+          if (!isValid) return done(null, false, { message: 'Incorrect password.' });
+        })
+
+        return done(null, user);
+      });
+
+    }
+  ));
+
+  passport.use('company-auth', new LocalStrategy({
+      usernameField: 'email',
+      passwordField: 'password'
+    }, function(email, password, done) {
+
+      Company.findOne({email: email}, function (err, user) {
+
+        if (err) { return done(err); }
+
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+
+        user.comparePassword(password, function (err, isValid) {
+          if (err) throw err;
+
+          if (!isValid) return done(null, false, { message: 'Incorrect password.' });
+        })
 
         return done(null, user);
       });

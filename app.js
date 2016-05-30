@@ -25,7 +25,7 @@ app.locals.ENV_DEVELOPMENT = env == 'development';
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
@@ -39,7 +39,7 @@ app.use(session({ secret: 'Linkar is awesome!' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/linkar/api/categories', categories);
 app.use('/linkar/api/products', products);

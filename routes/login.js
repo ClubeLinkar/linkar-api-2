@@ -3,7 +3,13 @@ var router = express.Router();
 var passport = require('passport');
 
 
-router.post('/', passport.authenticate('local'), function(req, res) {
+router.post('/user', passport.authenticate('user-auth'), function(req, res) {
+  // If this function gets called, authentication was successful.
+  // `req.user` contains the authenticated user.
+  res.status(200).send({loggedUser: req.user});
+});
+
+router.post('/company', passport.authenticate('company-auth'), function(req, res) {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
   res.status(200).send({loggedUser: req.user});
