@@ -3,9 +3,10 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   name: String,
-  email: String,
+  email: {type: String, unique: true},
   password: String,
-  role: String
+  cpf: {type: String, unique: true},
+  role: {type: String, default: 'CUSTOMER'}
 });
 
 module.exports = mongoose.model('User', userSchema)

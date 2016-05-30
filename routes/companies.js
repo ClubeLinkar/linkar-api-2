@@ -1,62 +1,62 @@
 var express = require('express');
 var router = express.Router();
-var Todo = require('../models/todo');
+var Company = require('../models/company');
 
 router.post('/', function(req, res) {
 
-  var todo = new Todo(req.body);
+  var company = new Company(req.body);
 
-    todo.save(function(err) {
+    company.save(function(err) {
       if (err) {
         return res.send(err);
       }
 
-      res.json({data: 'Novo Todo cadastrado com sucesso.'});
+      res.json({data: 'Novo Company cadastrado com sucesso.'});
     });
 
 });
 
 router.get('/', function(req, res) {
 
-  Todo.find(function (err, todos) {
+  Company.find(function (err, companys) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(todos);
+    res.json(companys);
   });
 
 });
 
 router.get('/:id', function(req, res) {
 
-  Todo.findOne({_id: req.params.id}, function (err, todo) {
+  Company.findOne({_id: req.params.id}, function (err, company) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(todo);
+    res.json(company);
   });
 
 });
 
 router.put('/:id', function(req, res){
 
-  Todo.findOne({ _id: req.params.id }, function(err, todo) {
+  Company.findOne({ _id: req.params.id }, function(err, company) {
     if (err) {
       return res.send(err);
     }
 
     for (prop in req.body) {
-      todo[prop] = req.body[prop];
+      company[prop] = req.body[prop];
     }
 
-    todo.save(function(err) {
+    company.save(function(err) {
       if (err) {
         return res.send(err);
       }
 
-      res.json({ message: 'Todo atualizado!' });
+      res.json({ message: 'Company atualizado!' });
     });
   });
 });
@@ -65,12 +65,12 @@ router.delete('/:id', function(req, res) {
 
   console.log("delete");
 
-  Todo.remove({_id: req.params.id}, function(err, todo) {
+  Company.remove({_id: req.params.id}, function(err, company) {
     if (err) {
       return res.send(err);
     }
 
-    res.json({ message: 'Todo deletado!' });
+    res.json({ message: 'Company deletado!' });
   });
 });
 
