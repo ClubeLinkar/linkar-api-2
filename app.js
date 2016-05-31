@@ -10,6 +10,7 @@ var categories = require('./routes/categories');
 var products = require('./routes/products');
 var companies = require('./routes/companies');
 var users = require('./routes/users');
+var transactions = require('./routes/transactions');
 
 var login = require('./routes/login');
 
@@ -45,6 +46,7 @@ app.use('/linkar/api/categories', categories);
 app.use('/linkar/api/products', products);
 app.use('/linkar/api/companies', companies);
 app.use('/linkar/api/users', users);
+app.use('/linkar/api/transactions', transactions);
 
 app.use('/linkar/api/login', login);
 
