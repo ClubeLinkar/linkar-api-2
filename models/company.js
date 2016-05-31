@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var companySchema = new Schema({
+var CompanySchema = new Schema({
   name: String,
   description: String,
   cnpj: {type: String, unique: true},
@@ -9,12 +9,12 @@ var companySchema = new Schema({
 
   // isso vai virar User
   email: {type: String, unique: true},
-  password: String,
+  password: {type: String},
   cnpj: {type: String, unique: true},
   role: {type: String, default: 'COMPANY'}
 });
 
-companySchema.methods.comparePassword = function(candidatePassword, cb) {
+CompanySchema.methods.comparePassword = function(candidatePassword, cb) {
   // bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
   //     if (err) return cb(err);
   //     cb(null, isMatch);
@@ -24,4 +24,4 @@ companySchema.methods.comparePassword = function(candidatePassword, cb) {
 
 };
 
-module.exports = mongoose.model('Company', companySchema)
+module.exports = mongoose.model('Company', CompanySchema)

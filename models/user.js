@@ -1,15 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var UserSchema = new Schema({
   name: String,
   email: {type: String, unique: true},
-  password: String,
+  password: {type: String},
   cpf: {type: String, unique: true},
   role: {type: String, default: 'CUSTOMER'}
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   // bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
   //     if (err) return cb(err);
   //     cb(null, isMatch);
@@ -19,4 +19,4 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 };
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', UserSchema)
