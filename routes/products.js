@@ -18,7 +18,9 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  Product.find(function (err, products) {
+  Product.find({
+    companyId: req.user._id
+  }, function (err, products) {
     if(err) {
       return res.send(err);
     }

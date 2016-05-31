@@ -10,6 +10,8 @@ router.post('/', function(req, res) {
   transaction.creatorName = req.user.name;
   transaction.creatorEmail = req.user.email;
 
+  transaction.companyName = req.user.name;
+
   transaction.save(function(err) {
     if (err) {
       return res.send(err);
@@ -22,7 +24,13 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  Transaction.find(function (err, transactions) {
+  var filter = req.user.role === 'COMPANY' ? {
+    creatorId: req.user._id
+  } : {
+    customerId: req.user._id
+  }
+
+  Transaction.find(filter, function (err, transactions) {
     if(err) {
       return res.send(err);
     }

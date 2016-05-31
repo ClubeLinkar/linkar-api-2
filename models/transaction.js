@@ -9,6 +9,7 @@ var TransactionSchema = new Schema({
    productName: {type: String},
    productUnitPrice: {type: Number, min: 0},
    productQuantity: {type: Number, min: 1},
+   productCategories: [String],
 
    amount: {type: String},
 
