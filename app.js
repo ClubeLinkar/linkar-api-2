@@ -51,15 +51,20 @@ app.use('/linkar/api/transactions', transactions);
 app.use('/linkar/api/login', login);
 
 // send to facebook to do the authentication
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+app.get('/linkar/api/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
 // handle the callback after facebook has authenticated the user
-app.get('/auth/facebook/callback',
+app.get('/linkar/api/auth/facebook/callback',
 	passport.authenticate('facebook', {
-		successRedirect : '/profile',
+		successRedirect : '/',
 		failureRedirect : '/'
 	})
 );
+
+app.get('/linkar/api/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

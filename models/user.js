@@ -6,6 +6,12 @@ var UserSchema = new Schema({
   email: {type: String, unique: true},
   password: {type: String},
   cpf: {type: String, unique: true},
+  facebook: {
+    id: {type: String},
+    token: {type: String},
+    name: {type: String},
+    email: {type: String}
+  },
   role: {type: String, default: 'CUSTOMER'}
 });
 
