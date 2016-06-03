@@ -11,7 +11,7 @@ var TransactionSchema = new Schema({
    productQuantity: {type: Number, min: 1},
    productCategories: [String],
 
-   amount: {type: String},
+   amount: {type: Number},
 
    customerId: {type: String},
    customerEmail: {type: String},
