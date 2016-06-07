@@ -6,25 +6,33 @@ router.post('/', function(req, res) {
 
   var user = new User(req.body);
 
-    user.save(function(err) {
-      if (err) {
-        return res.send(err);
-      }
+  user.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
 
-      res.json({data: 'Novo User cadastrado com sucesso.'});
-    });
+    res.json({data: 'Novo User cadastrado com sucesso.'});
+  });
 
 });
 
 router.get('/', function(req, res) {
 
-  User.find(function (err, users) {
+  if (req.query.name) {
+    User.find({
+      name: new RegExp(req.query.name, "i")
+    }, findUsersCallback);
+  } else {
+    User.find(findUsersCallback);
+  }
+
+  function findUsersCallback(err, users) {
     if(err) {
       return res.send(err);
     }
 
     res.json(users);
-  });
+  }
 
 });
 
@@ -78,13 +86,13 @@ router.post('/signup', function(req, res) {
 
   var user = new User(req.body);
 
-    user.save(function(err) {
-      if (err) {
-        return res.send(err);
-      }
+  user.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
 
-      res.json({data: 'Novo User cadastrado com sucesso.'});
-    });
+    res.json({data: 'Novo User cadastrado com sucesso.'});
+  });
 
 });
 
