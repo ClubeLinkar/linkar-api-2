@@ -12,7 +12,8 @@ var UserSchema = new Schema({
     name: {type: String},
     email: {type: String}
   },
-  role: {type: String, default: 'CUSTOMER'}
+  role: {type: String, default: 'CUSTOMER'},
+  createdAt: {type: Date, default: Date.now}
 });
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
