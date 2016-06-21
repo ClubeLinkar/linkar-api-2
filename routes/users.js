@@ -21,9 +21,9 @@ router.get('/', function(req, res) {
   if (req.query.name) {
     User.find({
       name: new RegExp(req.query.name, "i")
-    }, findUsersCallback);
+    }, {password: 0}, findUsersCallback);
   } else {
-    User.find(findUsersCallback);
+    User.find({}, {password: 0}, findUsersCallback);
   }
 
   function findUsersCallback(err, users) {
