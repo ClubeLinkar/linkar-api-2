@@ -24,11 +24,34 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   //     cb(null, isMatch);
   // });
 
+  // console.log("comparing pass");
+  //
+  // console.log(candidatePassword);
+  //
+  // console.log(this.password);
+
   // bcrypt.compare(candidatePassword, this.password, function(err, res) {
+  //
+  //   console.log("user.js::err=" + err);
+  //
+  //   console.log("user.js::res=" + res);
+  //
+  //   if(err) return cb(err);
+  //
   //   cb(null, res);
   // });
 
-  cb(null, candidatePassword === this.password);
+  // cb(null, candidatePassword === this.password);
+
+  // bcrypt.genSalt(10, function(err, salt) {
+  //   bcrypt.hash(candidatePassword, salt, function(err, hash) {
+  //     console.log(hash);
+  //   });
+  // });
+
+  var isValid = bcrypt.compareSync(candidatePassword, this.password);
+
+  cb(null, isValid);
 
 };
 
