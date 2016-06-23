@@ -6,6 +6,7 @@ var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var htmlToText = require('nodemailer-html-to-text').htmlToText;
 
+var bcrypt = require('bcryptjs');
 
 var transporter = nodemailer.createTransport(smtpTransport({
   host: 'localhost',
