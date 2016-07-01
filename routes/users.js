@@ -49,20 +49,30 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  if (req.query.name) {
-    User.find({
-      name: new RegExp(req.query.name, "i")
-    }, {password: 0}, findUsersCallback);
-  } else {
-    User.find({}, {password: 0}, findUsersCallback);
-  }
+  console.log(req.user);
 
-  function findUsersCallback(err, users) {
-    if(err) {
-      return res.send(err);
+  if (!req.user) {
+    res.json({error: "Autenticação requerida."})
+  } else {
+
+    var ommitedFields = {password: 0, cpf: 0};
+
+    if (req.query.name) {
+      User.find({
+        name: new RegExp(req.query.name, "i")
+      }, ommitedFields, findUsersCallback);
+    } else {
+      User.find({}, ommitedFields, findUsersCallback);
     }
 
-    res.json(users);
+    function findUsersCallback(err, users) {
+      if(err) {
+        return res.send(err);
+      }
+
+      res.json(users);
+    }
+
   }
 
 });
