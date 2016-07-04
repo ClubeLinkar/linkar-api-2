@@ -1,0 +1,54 @@
+var express = require('express');
+var router = express.Router();
+var Company = require('../../models/company');
+var Product = require('../../models/product');
+
+router.get('/:id', function(req, res) {
+
+  Company.findOne({_id: req.params.id}, function (err, company) {
+
+    if(err) {
+      console.log(err);
+      return res.send(err);
+    }
+
+    if(!company) {
+      return res.status(400).send({error: 'Empresa não encontrada.'});
+    }
+
+    var ommitedFields = {
+      _id: 0,
+      code: 0,
+      companyId: 0,
+      categories: 0,
+      __v: 0
+    }
+
+    Product.find({}, ommitedFields, function (err, featuredProducts) {
+      if(err) {
+        console.log(err);
+        return res.send(err);
+      }
+
+      var hotsite = {
+        company: {
+          name: company.name,
+          desc: company.description,
+          addr: company.address,
+          email: company.email,
+          addr: company.site,
+          social: company.social
+        },
+        products: featuredProducts
+      }
+
+      console.log(hotsite);
+
+      res.json(hotsite);
+    });
+
+  });
+
+});
+
+module.exports = router;

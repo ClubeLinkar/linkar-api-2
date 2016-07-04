@@ -1,13 +1,20 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var SocialType = require('./social.type');
 
 var CompanySchema = new Schema({
-  name: String,
+  name: {type: String, unique: true},
   description: String,
-  cnpj: {type: String, unique: true},
   categories: [String],
 
+  social: {type: SocialType},
+
+  address: String,
+  phones: [String],
+  site: {type: String, unique: true},
+
   // isso vai virar User
+  login: {type: String, unique: true},
   email: {type: String, unique: true},
   password: {type: String},
   cnpj: {type: String, unique: true},

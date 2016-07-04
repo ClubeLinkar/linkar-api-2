@@ -1,8 +1,8 @@
 var passport = require('passport'),
-LocalStrategy = require('passport-local').Strategy;
-FacebookStrategy = require('passport-facebook').Strategy,
-User = require('../models/user');
-Company = require('../models/company');
+    LocalStrategy = require('passport-local').Strategy;
+    FacebookStrategy = require('passport-facebook').Strategy,
+    User = require('../models/user');
+    Company = require('../models/company');
 
 module.exports = function (app) {
 
@@ -141,3 +141,9 @@ function(req, token, refreshToken, profile, done) {
 }));
 
 };
+// 
+// exports.ensureAuthenicated = function(req, res, next) {
+//   if (req.isAuthenticated()) { return next(); }
+//
+//   res.redirect('/login')
+// }
