@@ -3,7 +3,8 @@ var SocialType = {
   twitter: {type: String, unique: true},
   gplus: {type: String, unique: true},
   instagram: {type: String, unique: true},
-  whatsapp: {type: String, unique: true}
+  whatsapp: {type: String, unique: true},
+  youtube: {type: String, unique: true},
 }
 
 exports.SocialType = SocialType;

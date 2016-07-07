@@ -3,9 +3,9 @@ var router = express.Router();
 var Company = require('../../models/company');
 var Product = require('../../models/product');
 
-router.get('/:id', function(req, res) {
+router.get('/:login', function(req, res) {
 
-  Company.findOne({_id: req.params.id}, function (err, company) {
+  Company.findOne({login: req.params.login}, function (err, company) {
 
     if(err) {
       console.log(err);
@@ -35,14 +35,13 @@ router.get('/:id', function(req, res) {
           name: company.name,
           desc: company.description,
           addr: company.address,
+          phones: company.phones,
           email: company.email,
-          addr: company.site,
+          site: company.site,
           social: company.social
         },
         products: featuredProducts
       }
-
-      console.log(hotsite);
 
       res.json(hotsite);
     });
