@@ -24,7 +24,7 @@ router.get('/:login', function(req, res) {
       __v: 0
     }
 
-    Product.find({}, ommitedFields, function (err, featuredProducts) {
+    Product.find({companyId: company._id}, ommitedFields, function (err, featuredProducts) {
       if(err) {
         console.log(err);
         return res.send(err);
