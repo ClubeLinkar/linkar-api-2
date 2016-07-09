@@ -11,7 +11,7 @@ var CompanySchema = new Schema({
 
   address: String,
   phones: [String],
-  site: {type: String, unique: true},
+  site: {type: String},
 
   // isso vai virar User
   login: {type: String, unique: true, required: true},
