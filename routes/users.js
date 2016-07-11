@@ -49,8 +49,6 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  console.log(req.user);
-
   if (!req.user) {
     res.json({error: "Autenticação requerida."})
   } else {
@@ -58,9 +56,9 @@ router.get('/', function(req, res) {
     var ommitedFields = {password: 0, cpf: 0};
 
     if (req.query.name) {
-      User.find({
-        name: new RegExp(req.query.name, "i")
-      }, ommitedFields, findUsersCallback);
+      User.find({name: new RegExp(req.query.name, "i")}, ommitedFields, findUsersCallback);
+    } else if (req.query.emailOrCpf) {
+      User.find({$or : [{cpf: req.query.emailOrCpf}, {email: req.query.emailOrCpf}]}, ommitedFields, findUsersCallback);
     } else {
       User.find({}, ommitedFields, findUsersCallback);
     }
@@ -70,7 +68,13 @@ router.get('/', function(req, res) {
         return res.send(err);
       }
 
-      res.json(users);
+      if (users.length > 0){
+        res.json(users);
+      } else {
+        res.status(404).send({error: "Usuário não encontrado."});
+      }
+
+
     }
 
   }
