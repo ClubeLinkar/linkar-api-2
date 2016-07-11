@@ -7,6 +7,7 @@ var ProductSchema = new Schema({
   description: String,
   price: Number,
   companyId: String, //TODO substituir por ref???
+  featured: {type: Boolean, default: false},
   categories: [String]
 });
 

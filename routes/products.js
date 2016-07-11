@@ -6,27 +6,39 @@ router.post('/', function(req, res) {
 
   var product = new Product(req.body);
 
-    product.save(function(err) {
-      if (err) {
-        return res.send(err);
-      }
+  if (req.user.role === 'COMPANY') {
+    product.companyId = req.user._id;
+  }
 
-      res.json({data: 'Novo Product cadastrado com sucesso.'});
-    });
+  product.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
+
+    res.json({data: 'Novo Product cadastrado com sucesso.'});
+  });
 
 });
 
 router.get('/', function(req, res) {
 
-  Product.find({
-    companyId: req.user._id
-  }, function (err, products) {
+  var loggedUser = req.user;
+
+  if (!loggedUser) {
+    res.json({error: "Autenticação requerida."})
+  } else if (loggedUser.role === 'ADMIN'){
+    Product.find(searchProducts);
+  } else {
+    Product.find({companyId: req.user._id}, searchProducts);
+  }
+
+  function searchProducts(err, products) {
     if(err) {
       return res.send(err);
     }
 
     res.json(products);
-  });
+  }
 
 });
 
