@@ -13,6 +13,14 @@ var CompanySchema = new Schema({
   phones: [String],
   site: {type: String},
 
+  targetAudience: [{
+    gender: [String],
+    age: [String],
+    localty: [String],
+    interests: [String],
+    positioning: {type: String}
+  }],
+
   // isso vai virar User
   login: {type: String, unique: true, required: true},
   email: {type: String, unique: true, required: true},

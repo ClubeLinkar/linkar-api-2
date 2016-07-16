@@ -18,12 +18,12 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  Category.find(function (err, categorys) {
+  Category.find(function (err, categories) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(categorys);
+    res.json(categories);
   });
 
 });
