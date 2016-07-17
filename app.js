@@ -7,6 +7,9 @@ var express = require('express'),
     passport = require('passport');
 
 var categories = require('./routes/categories');
+var affinityCategories = require('./routes/affinity-categories');
+var inMarketSegments = require('./routes/in-market-segments');
+
 var products = require('./routes/products');
 var companies = require('./routes/companies');
 var users = require('./routes/users');
@@ -44,6 +47,9 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/linkar/api/categories', categories);
+app.use('/linkar/api/affinity-categories', affinityCategories);
+app.use('/linkar/api/in-market-segments', inMarketSegments);
+
 app.use('/linkar/api/products', products);
 app.use('/linkar/api/companies', companies);
 app.use('/linkar/api/companies/hotsite/', hotsite);
