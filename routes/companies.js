@@ -56,14 +56,6 @@ router.get('/:id', function(req, res) {
 
 router.put('/:id', function(req, res){
 
-  console.log('======');
-  console.log(req);
-  console.log('======');
-  console.log(req.body);
-  console.log('======');
-  console.log(req.body.targetAudience);
-  console.log('======');
-
   Company.findOne({ _id: req.params.id }, function(err, company) {
     if (err) {
       return res.send(err);
