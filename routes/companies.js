@@ -18,13 +18,27 @@ router.post('/', function(req, res) {
 
 router.get('/', function(req, res) {
 
-  Company.find(function (err, companys) {
+  var ommitedFields = {password: 0};
+
+  if (req.query.email) {
+    Company.find({email: req.query.email}, ommitedFields, findCompaniesCallback);
+  } else {
+    Company.find({}, ommitedFields, findCompaniesCallback);
+  }
+
+  function findCompaniesCallback(err, companies) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(companys);
-  });
+    if (companies.length > 0){
+      res.json(companies);
+    } else {
+      res.status(404).send({error: "Empresa não encontrada."});
+    }
+
+
+  }
 
 });
 
@@ -41,6 +55,14 @@ router.get('/:id', function(req, res) {
 });
 
 router.put('/:id', function(req, res){
+
+  console.log('======');
+  console.log(req);
+  console.log('======');
+  console.log(req.body);
+  console.log('======');
+  console.log(req.body.targetAudience);
+  console.log('======');
 
   Company.findOne({ _id: req.params.id }, function(err, company) {
     if (err) {
