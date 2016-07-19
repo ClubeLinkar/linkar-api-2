@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 var SocialType = require('./social.type');
 var TargetAudienceType = require('./target-audience.type');
 
+var bcrypt = require('bcryptjs');
+
 var CompanySchema = new Schema({
   name: {type: String, unique: true, required: true},
   description: String,
@@ -25,12 +27,10 @@ var CompanySchema = new Schema({
 });
 
 CompanySchema.methods.comparePassword = function(candidatePassword, cb) {
-  // bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-  //     if (err) return cb(err);
-  //     cb(null, isMatch);
-  // });
 
-  cb(null, candidatePassword === this.password);
+  var isValid = bcrypt.compareSync(candidatePassword, this.password);
+
+  cb(null, isValid);
 
 };
 

@@ -74,7 +74,6 @@ router.get('/', function(req, res) {
         res.status(404).send({error: "Usuário não encontrado."});
       }
 
-
     }
 
   }
@@ -101,7 +100,16 @@ router.put('/:id', function(req, res){
     }
 
     for (prop in req.body) {
-      user[prop] = req.body[prop];
+      if (prop === 'password') {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body[prop], salt);
+
+        if (!bcrypt.compareSync(user.password, hash)) {
+          user[prop] = hash;
+        }
+      } else {
+        user[prop] = req.body[prop];
+      }
     }
 
     user.save(function(err) {
@@ -111,6 +119,7 @@ router.put('/:id', function(req, res){
 
       res.json({ message: 'User atualizado!' });
     });
+
   });
 });
 

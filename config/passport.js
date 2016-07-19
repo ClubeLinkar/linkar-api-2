@@ -31,7 +31,7 @@ module.exports = function (app) {
           if (err) throw err;
 
           if (!isValid) return done(null, false, { message: 'Incorrect password.' });
-        })
+        });
 
         return done(null, user);
       });
@@ -56,7 +56,7 @@ module.exports = function (app) {
           if (err) throw err;
 
           if (!isValid) return done(null, false, { message: 'Incorrect password.' });
-        })
+        });
 
         return done(null, user);
       });
@@ -74,8 +74,6 @@ passport.use(new FacebookStrategy({
 
 },
 function(req, token, refreshToken, profile, done) {
-
-  console.log(profile);
 
   // asynchronous
   process.nextTick(function() {
@@ -141,7 +139,7 @@ function(req, token, refreshToken, profile, done) {
 }));
 
 };
-// 
+//
 // exports.ensureAuthenicated = function(req, res, next) {
 //   if (req.isAuthenticated()) { return next(); }
 //
