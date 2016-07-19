@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Company = require('../models/company');
 
+var bcrypt = require('bcryptjs');
+
 router.post('/', function(req, res) {
 
   var company = new Company(req.body);
@@ -62,7 +64,16 @@ router.put('/:id', function(req, res){
     }
 
     for (prop in req.body) {
-      company[prop] = req.body[prop];
+      if (prop === 'password') {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body[prop], salt);
+
+        if (!bcrypt.compareSync(company.password, hash)) {
+          company[prop] = hash;
+        }
+      } else {
+        company[prop] = req.body[prop];
+      }
     }
 
     company.save(function(err) {
