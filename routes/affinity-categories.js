@@ -1,117 +1,77 @@
 var express = require('express');
 var router = express.Router();
-// var AffinityCategory = require('../models/affinity-category');
+var AffinityCategory = require('../models/affinity-category');
+
+router.post('/', function(req, res) {
+
+  var category = new AffinityCategory(req.body);
+
+    category.save(function(err) {
+      if (err) {
+        return res.send(err);
+      }
+
+      res.json({data: 'Novo AffinityCategory cadastrado com sucesso.'});
+    });
+
+});
 
 router.get('/', function(req, res) {
 
-  var affinityCategories = [
+  AffinityCategory.find(function (err, categories) {
+    if(err) {
+      return res.send(err);
+    }
 
-    {name: 'Arte e Teatro Aficionados'},
-    {name: 'auto entusiastas'},
-    {name: 'Auto entusiastas / entusiastas da motocicleta'},
-    {name: 'Auto entusiastas / Desempenho & Luxo entusiastas de veículos'},
-    {name: 'Auto entusiastas / Caminhões & SUV Entusiastas'},
-    {name: 'investidores ávidos'},
-    {name: 'especialistas em beleza'},
-    {name: 'profissionais de negócios'},
-    {name: 'Quadrinhos e Animação Fans'},
-    {name: 'entusiastas da cozinha'},
-    {name: 'Cozinhar entusiastas / 30 Minute Chefs'},
-    {name: 'Entusiastas da cozinha / Chefs Aspirantes'},
-    {name: 'Faça -você-mesmo'},
-    {name: 'Focada na família'},
-    {name: 'Fashionistas'},
-    {name: 'Buscadores de fast food'},
-    {name: 'apreciadores de culinária'},
-    {name: 'Jogadores'},
-    {name: 'Jogadores/ jogadores fans de game'},
-    {name: 'Jogadores/ jogadores fans de jogos de aventura'},
-    {name: 'Jogadores/ jogadores gamers de jogos de aventura'},
-    {name: 'Jogadores/ jogadores fãs de jogos de aventura'},
-    {name: 'Jogadores/ jogadores de jogos radicais'},
-    {name: 'Jogadores/ Fãs de jogos de atiradores'},
-    {name: 'Jogadores/ Fãs de de jogos de esportes'},
-    {name: 'Entusiastas da Vida verde'},
-    {name: 'Saúde & Fitness Buffs'},
-    {name: 'Entusiastas de Decoração de casas'},
-    {name: 'Entusiastas de Móveis'},
-    {name: 'Amantes do cinema'},
-    {name: 'Amantes do cinema/ Fãs de ação e aventura'},
-    {name: 'Amantes do cinema/ Fãs de comédia'},
-    {name: 'Amantes do cinema/ Fãs de filmes familiares'},
-    {name: 'Amantes do cinema/ Fãs de filmes de terror'},
-    {name: 'Amantes do cinema/ Fãs de romance e drama'},
-    {name: 'Amantes do cinema/ Fãs de ficção científica'},
-    {name: 'Amantes do cinema/ Fãs de filmes asiáticos'},
-    {name: 'Amantes da música'},
-    {name: 'Amantes da música/ Fãs de blues'},
-    {name: 'Amantes da música/ Fãs de música clássica'},
-    {name: 'Amantes da música/ Fãs de música country'},
-    {name: 'Amantes da música/ Fãs de música eletrônica e dance'},
-    {name: 'Amantes da música/ Fãs de música folk e tradicional'},
-    {name: 'Amantes da música/ Fãs de música indie e rock alternativo'},
-    {name: 'Amantes da música/ Fãs de jazz'},
-    {name: 'Amantes da música/ Fãs de metal'},
-    {name: 'Amantes da música/ Fãs de música pop'},
-    {name: 'Amantes da música/ Fãs de Hip Hop e rap'},
-    {name: 'Amantes da música/ Fãs de Rock in roll'},
-    {name: 'Amantes da música/ Fãs de música de língua espanhola'},
-    {name: 'Amantes da música/ Fãs de música mundiais'},
-    {name: 'Víciados em notícias e leitores ávidos'},
-    {name: 'Víciados em notícias e leitores ávidos/Negócios e economia'},
-    {name: 'Víciados em notícias e leitores ávidos/Entreterimento e celebridades'},
-    {name: 'Víciados em notícias e leitores ávidos/notícias locais'},
-    {name: 'Víciados em notícias e leitores ávidos/fãs de mulheres'},
-    {name: 'Víciados em notícias e leitores ávidos/Notícias mundiais'},
-    {name: 'Entusiastas de diversão nocturna'},
-    {name: 'Entusiastas ao ar livre'},
-    {name: 'Amantes dos animais'},
-    {name: 'Amantes dos animais/amantes de gatos'},
-    {name: 'Amantes dos animais/amantes de cães'},
-    {name: 'Vicíados em política'},
-    {name: 'Compradores/ caçadores de pechinchas'},
-    {name: 'Compradores/ consumidores de luxo'},
-    {name: 'Compradores/Compradores compulsivos'},
-    {name: 'Compradores/Compradores de valor'},
-    {name: 'Fotógrafo amador'},
-    {name: 'Entusiatas por mídias sociais'},
-    {name: 'Fãs de esporte'},
-    {name: 'Fãs de esporte/Fãs de futebol americano'},
-    {name: 'Fãs de esporte/Fãs de baseball'},
-    {name: 'Fãs de esporte/Fãs de basquete'},
-    {name: 'Fãs de esporte/Fãs de barcos e navegação'},
-    {name: 'Fãs de esporte/Fãs de Cricket'},
-    {name: 'Fãs de esporte/Fãs de Ciclismo'},
-    {name: 'Fãs de esporte/Fãs de luta'},
-    {name: 'Fãs de esporte/Fãs de Golfe'},
-    {name: 'Fãs de esporte/Fãs de Hockey'},
-    {name: 'Fãs de esporte/Fãs de Motocross'},
-    {name: 'Fãs de esporte / entusiastas Raquetebol'},
-    {name: 'Fãs de esporte/Fãs de corrida'},
-    {name: 'Fãs de esporte/Fãs de esquiar'},
-    {name: 'Fãs de esporte/Fãs de futebol'},
-    {name: 'Fãs de esporte/Fãs de natação'},
-    {name: 'Fãs de esporte/Fãs de Tênis'},
-    {name: 'Fãs de esporte/Fãs de esportes aquáticos'},
-    {name: 'Fãs de esporte/Fãs de esportes de inverno'},
-    {name: 'tecnófilos'},
-    {name: 'Caçadores de Emoção'},
-    {name: 'Aficionados por viagens'},
-    {name: 'Aficionados por viagens/ Viagens em família'},
-    {name: 'Aficionados por viagens/ Viagens de luxo'},
-    {name: 'Aficionados por viagens /'},
-    {name: 'Amantes de TV'},
-    {name: 'Amantes de TV/ Fãs de documentários não-ficção'},
-    {name: 'Amantes de TV/ Fãs programação familiar'},
-    {name: 'Amantes de TV/ Fãs games, reality show e talk show'},
-    {name: 'Amantes de TV/ Fãs ficção científica e fantasia'},
-    {name: 'Amantes de TV/ Fãs de comédia'},
-    {name: 'Amantes de TV/ Fãs de drama'}
-  ];
+    res.json(categories);
+  });
 
-  res.json(affinityCategories);
+});
 
+router.get('/:id', function(req, res) {
 
+  AffinityCategory.findOne({_id: req.params.id}, function (err, category) {
+    if(err) {
+      return res.send(err);
+    }
+
+    res.json(category);
+  });
+
+});
+
+router.put('/:id', function(req, res){
+
+  AffinityCategory.findOne({ _id: req.params.id }, function(err, category) {
+    if (err) {
+      return res.send(err);
+    }
+
+    for (prop in req.body) {
+      category[prop] = req.body[prop];
+    }
+
+    category.save(function(err) {
+      if (err) {
+        return res.send(err);
+      }
+
+      res.json({ message: 'AffinityCategory atualizado!' });
+    });
+  });
+});
+
+router.delete('/:id', function(req, res) {
+
+  console.log("delete");
+
+  AffinityCategory.remove({_id: req.params.id}, function(err, category) {
+    if (err) {
+      return res.send(err);
+    }
+
+    res.json({ message: 'Category deletado!' });
+  });
 });
 
 module.exports = router;
