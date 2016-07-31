@@ -8,13 +8,18 @@ router.post('/', function(req, res) {
 
   var company = new Company(req.body);
 
-    company.save(function(err) {
-      if (err) {
-        return res.send(err);
-      }
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(company.password, salt);
 
-      res.json({data: 'Novo Company cadastrado com sucesso.'});
-    });
+  company.password = hash;
+
+  company.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
+
+    res.json({data: 'Novo Company cadastrado com sucesso.'});
+  });
 
 });
 
