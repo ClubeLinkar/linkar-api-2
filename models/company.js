@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 var SocialType = require('./social.type');
 var TargetAudienceType = require('./target-audience.type');
 
+var shortid = require('shortid');
+
 var bcrypt = require('bcryptjs');
 
 var CompanySchema = new Schema({
@@ -17,6 +19,11 @@ var CompanySchema = new Schema({
   site: {type: String},
 
   targetAudience: {type: TargetAudienceType},
+
+  identifier: {
+    type: String,
+    default: shortid.generate
+  },
 
   // isso vai virar User
   login: {type: String, unique: true, required: true},
