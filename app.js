@@ -91,7 +91,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.send(503, {
+        res.status(503).send({
             message: err.message,
             error: err,
             title: 'error'
