@@ -25,6 +25,12 @@ var CompanySchema = new Schema({
     default: shortid.generate
   },
 
+  contractAgreement: {
+    url: {type: String},
+    isAccepted: {type: Boolean, default: false},
+    date: {type: Date}
+  },
+
   // isso vai virar User
   login: {type: String, unique: true, required: true},
   email: {type: String, unique: true, required: true},
@@ -40,5 +46,10 @@ CompanySchema.methods.comparePassword = function(candidatePassword, cb) {
   cb(null, isValid);
 
 };
+
+CompanySchema.pre('save', function(next) {
+  this.contractAgreement.date = this.contractAgreement.isAccepted ? Date.now() : null;
+  next();
+});
 
 module.exports = mongoose.model('Company', CompanySchema)
