@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var SocialType = require('./social.type');
 var TargetAudienceType = require('./target-audience.type');
+var ResponsiblePersonType = require('./responsible-person.type');
 
 var shortid = require('shortid');
 
@@ -30,6 +31,8 @@ var CompanySchema = new Schema({
     isAccepted: {type: Boolean, default: false},
     date: {type: Date}
   },
+
+  responsiblePerson: {type: ResponsiblePersonType},
 
   // isso vai virar User
   login: {type: String, unique: true, required: true},
