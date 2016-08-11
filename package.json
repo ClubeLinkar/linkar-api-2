@@ -32,6 +32,7 @@
     "gulp-nodemon": "^2.0.2",
     "gulp-plumber": "^1.0.0",
     "gulp-util": "^3.0.7",
-    "sinon": "^1.17.5"
+    "sinon": "^1.17.5",
+    "sinon-mongoose": "^1.2.1"
   }
 }
