@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var AffinityCategory = require('../models/affinity-category');
+var ProductCategory = require('./product-category');
 
 router.post('/', function(req, res) {
 
-  var category = new AffinityCategory(req.body);
+  var category = new ProductCategory(req.body);
 
     category.save(function(err) {
       if (err) {
         return res.send(err);
       }
 
-      res.json({data: 'Novo AffinityCategory cadastrado com sucesso.'});
+      res.json({data: 'Novo ProductCategory cadastrado com sucesso.'});
     });
 
 });
 
 router.get('/', function(req, res) {
 
-  AffinityCategory.find(function (err, categories) {
+  ProductCategory.find(function (err, categories) {
     if(err) {
       return res.send(err);
     }
@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
 
-  AffinityCategory.findOne({_id: req.params.id}, function (err, category) {
+  ProductCategory.findOne({_id: req.params.id}, function (err, category) {
     if(err) {
       return res.send(err);
     }
@@ -42,7 +42,7 @@ router.get('/:id', function(req, res) {
 
 router.put('/:id', function(req, res){
 
-  AffinityCategory.findOne({ _id: req.params.id }, function(err, category) {
+  ProductCategory.findOne({ _id: req.params.id }, function(err, category) {
     if (err) {
       return res.send(err);
     }
@@ -56,7 +56,7 @@ router.put('/:id', function(req, res){
         return res.send(err);
       }
 
-      res.json({ message: 'AffinityCategory atualizado!' });
+      res.json({ message: 'ProductCategory atualizado!' });
     });
   });
 });
@@ -65,12 +65,12 @@ router.delete('/:id', function(req, res) {
 
   console.log("delete");
 
-  AffinityCategory.remove({_id: req.params.id}, function(err, category) {
+  ProductCategory.remove({_id: req.params.id}, function(err, category) {
     if (err) {
       return res.send(err);
     }
 
-    res.json({ message: 'Category deletado!' });
+    res.json({ message: 'ProductCategory deletado!' });
   });
 });
 

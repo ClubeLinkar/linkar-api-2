@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Transaction = require('../models/transaction');
+var Transaction = require('./transaction');
 
 var sg = require('sendgrid').SendGrid("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");
 var helper = require('sendgrid').mail;

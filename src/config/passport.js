@@ -1,8 +1,8 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
     FacebookStrategy = require('passport-facebook').Strategy,
-    User = require('../models/user');
-    Company = require('../models/company');
+    User = require('../api/users/user');
+    Company = require('../api/companies/company');
 
 module.exports = function (app) {
 

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var CompanyCategory = require('../models/company-category');
+var CompanyCategory = require('./company-category');
 
 router.post('/', function(req, res) {
 

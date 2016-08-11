@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var SocialType = require('./social.type');
-var TargetAudienceType = require('./target-audience.type');
-var ResponsiblePersonType = require('./responsible-person.type');
+var SocialType = require('../../support/model/social.type');
+var TargetAudienceType = require('../../support/model/target-audience.type');
+var ResponsiblePersonType = require('../../support/model/responsible-person.type');
 
 var shortid = require('shortid');
 

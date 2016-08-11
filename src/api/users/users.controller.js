@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/user');
+var User = require('./user');
 var bcrypt = require('bcryptjs');
 
 var sg = require('sendgrid').SendGrid("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");

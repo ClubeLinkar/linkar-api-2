@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Company = require('../models/company');
+var Company = require('./company');
 
 var bcrypt = require('bcryptjs');
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var Company = require('../../models/company');
-var Product = require('../../models/product');
+var Company = require('../companies/company');
+var Product = require('../products/product');
 
 router.get('/:login', function(req, res) {
 

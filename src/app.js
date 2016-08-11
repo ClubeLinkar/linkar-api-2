@@ -6,24 +6,20 @@ var express = require('express'),
     session = require('express-session'),
     passport = require('passport');
 
-var companyCategories = require('./routes/company-categories');
-var productCategories = require('./routes/product-categories');
-
-var affinityCategories = require('./routes/affinity-categories');
-var inMarketSegments = require('./routes/in-market-segments');
-
-var products = require('./routes/products');
-var companies = require('./routes/companies');
-var users = require('./routes/users');
-var transactions = require('./routes/transactions');
-var hotsite = require('./routes/companies/hotsite.js');
-
-var login = require('./routes/login');
-
-require('./config/database')('mongodb://localhost:27017/linkar');
+var companyCategories = require('./api/categories/companies/company-categories.controller'),
+    productCategories = require('./api/categories/products/product-categories.controller'),
+    affinityCategories = require('./api/categories/affinities/affinity-categories.controller'),
+    inMarketSegments = require('./api/categories/segments/in-market-segments.controller'),
+    products = require('./api/products/products.controller'),
+    companies = require('./api/companies/companies.controller'),
+    users = require('./api/users/users.controller'),
+    transactions = require('./api/transactions/transactions.controller'),
+    hotsite = require('./api/hotsite/hotsite.controller'),
+    login = require('./support/auth/login.controller');
 
 var app = express();
 
+require('./config/database')('mongodb://localhost:27017/linkar'); // FIXME parametrizar isso aqui!
 require('./config/passport')(app);
 
 var env = process.env.NODE_ENV || 'development';

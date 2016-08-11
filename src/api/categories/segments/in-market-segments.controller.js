@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var ProductCategory = require('../models/product-category');
+var InMarketSegment = require('./in-market-segment');
 
 router.post('/', function(req, res) {
 
-  var category = new ProductCategory(req.body);
+  var segment = new InMarketSegment(req.body);
 
-    category.save(function(err) {
+    segment.save(function(err) {
       if (err) {
         return res.send(err);
       }
 
-      res.json({data: 'Novo ProductCategory cadastrado com sucesso.'});
+      res.json({data: 'Novo InMarketSegment cadastrado com sucesso.'});
     });
 
 });
 
 router.get('/', function(req, res) {
 
-  ProductCategory.find(function (err, categories) {
+  InMarketSegment.find(function (err, categories) {
     if(err) {
       return res.send(err);
     }
@@ -30,33 +30,33 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
 
-  ProductCategory.findOne({_id: req.params.id}, function (err, category) {
+  InMarketSegment.findOne({_id: req.params.id}, function (err, segment) {
     if(err) {
       return res.send(err);
     }
 
-    res.json(category);
+    res.json(segment);
   });
 
 });
 
 router.put('/:id', function(req, res){
 
-  ProductCategory.findOne({ _id: req.params.id }, function(err, category) {
+  InMarketSegment.findOne({ _id: req.params.id }, function(err, segment) {
     if (err) {
       return res.send(err);
     }
 
     for (prop in req.body) {
-      category[prop] = req.body[prop];
+      segment[prop] = req.body[prop];
     }
 
-    category.save(function(err) {
+    segment.save(function(err) {
       if (err) {
         return res.send(err);
       }
 
-      res.json({ message: 'ProductCategory atualizado!' });
+      res.json({ message: 'InMarketSegment atualizado!' });
     });
   });
 });
@@ -65,12 +65,12 @@ router.delete('/:id', function(req, res) {
 
   console.log("delete");
 
-  ProductCategory.remove({_id: req.params.id}, function(err, category) {
+  InMarketSegment.remove({_id: req.params.id}, function(err, segment) {
     if (err) {
       return res.send(err);
     }
 
-    res.json({ message: 'ProductCategory deletado!' });
+    res.json({ message: 'segment deletado!' });
   });
 });
 
