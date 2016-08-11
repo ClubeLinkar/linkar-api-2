@@ -1,26 +1,14 @@
-var express = require('express');
-var router = express.Router();
 var Product = require('./product');
 
-router.post('/', function(req, res) {
+var ProductController = {
+  list: list,
+  getById: getById,
+  create: create,
+  update: update,
+  remove: remove
+};
 
-  var product = new Product(req.body);
-
-  if (req.user.role === 'COMPANY') {
-    product.companyId = req.user._id;
-  }
-
-  product.save(function(err) {
-    if (err) {
-      return res.send(err);
-    }
-
-    res.json({data: 'Novo Product cadastrado com sucesso.'});
-  });
-
-});
-
-router.get('/', function(req, res) {
+function list(req, res) {
 
   var loggedUser = req.user;
 
@@ -40,9 +28,9 @@ router.get('/', function(req, res) {
     res.json(products);
   }
 
-});
+}
 
-router.get('/:id', function(req, res) {
+function getById(req, res) {
 
   Product.findOne({_id: req.params.id}, function (err, product) {
     if(err) {
@@ -52,9 +40,27 @@ router.get('/:id', function(req, res) {
     res.json(product);
   });
 
-});
+}
 
-router.put('/:id', function(req, res){
+function create(req, res) {
+
+  var product = new Product(req.body);
+
+  if (req.user.role === 'COMPANY') {
+    product.companyId = req.user._id;
+  }
+
+  product.save(function(err) {
+    if (err) {
+      return res.send(err);
+    }
+
+    res.json({data: 'Novo Product cadastrado com sucesso.'});
+  });
+
+}
+
+function update(req, res) {
 
   Product.findOne({ _id: req.params.id }, function(err, product) {
     if (err) {
@@ -73,11 +79,9 @@ router.put('/:id', function(req, res){
       res.json({ message: 'Product atualizado!' });
     });
   });
-});
+}
 
-router.delete('/:id', function(req, res) {
-
-  console.log("delete");
+function remove(req, res) {
 
   Product.remove({_id: req.params.id}, function(err, product) {
     if (err) {
@@ -86,6 +90,6 @@ router.delete('/:id', function(req, res) {
 
     res.json({ message: 'Product deletado!' });
   });
-});
+}
 
-module.exports = router;
+module.exports = ProductController;
