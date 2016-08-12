@@ -4,19 +4,21 @@ var gulp = require('gulp'),
   livereload = require('gulp-livereload');
 
 
+  var gulp = require('gulp');
+  var mocha = require('gulp-mocha');
+  var util = require('gulp-util');
 
-var mocha = require('gulp-mocha');
-var gutil = require('gulp-util');
-
-// gulp.task('default', function() {
-//   gulp.watch(['lib/**', 'test/**'], ['mocha']);
-// });
-
-gulp.task('test', function() {
+gulp.task('test', function () {
   return gulp.src(['test/**/*.js'], { read: false })
-  .pipe(mocha({ reporter: 'list' }))
-  .on('error', gutil.log);
+  .pipe(mocha({ reporter: 'spec' }))
+  .on('error', util.log);
 });
+
+gulp.task('watch-test', function () {
+  gulp.watch(['views/**', 'public/**', 'app.js', 'framework/**', 'test/**', 'src/**'], ['test']);
+});
+
+
 
 gulp.task('develop', function () {
   livereload.listen();
