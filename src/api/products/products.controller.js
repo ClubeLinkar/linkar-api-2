@@ -13,9 +13,9 @@ function list(req, res) {
   var loggedUser = req.user;
 
   if (!loggedUser) {
-    res.json({error: "Autenticação requerida."})
-  } else if (loggedUser.role === 'ADMIN'){
-    Product.find(searchProducts);
+    res.json({error: "Autenticação requerida."});
+  } else if (loggedUser.role === 'ADMIN') {
+    Product.find({}, searchProducts);
   } else {
     Product.find({companyId: req.user._id}, searchProducts);
   }
@@ -24,7 +24,6 @@ function list(req, res) {
     if(err) {
       return res.send(err);
     }
-
     res.json(products);
   }
 
