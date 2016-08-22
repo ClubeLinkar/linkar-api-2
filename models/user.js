@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var AuthProviderType = require('./auth-provider.type');
+
 var bcrypt = require('bcryptjs');
 
 var UserSchema = new Schema({
@@ -8,12 +10,9 @@ var UserSchema = new Schema({
   email: {type: String, unique: true},
   password: {type: String},
   cpf: {type: String, unique: true},
-  facebook: {
-    id: {type: String},
-    token: {type: String},
-    name: {type: String},
-    email: {type: String}
-  },
+
+  providers: [AuthProviderType],
+
   role: {type: String, default: 'CUSTOMER'},
   createdAt: {type: Date, default: Date.now}
 });
