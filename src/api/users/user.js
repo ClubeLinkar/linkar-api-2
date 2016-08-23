@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var AuthProviderType = require('./auth-provider.type');
+var AuthProviderType = require('../../support/model/auth-provider.type');
 
 var bcrypt = require('bcryptjs');
 
