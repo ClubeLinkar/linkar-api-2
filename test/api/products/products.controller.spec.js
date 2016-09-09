@@ -16,13 +16,15 @@ describe("Products Controller", () => {
   beforeEach(function () {
     sinon.stub(Product, 'find');
     sinon.stub(Product, 'findOne');
-    sinon.stub(Product, 'create');
+    sinon.stub(Product, 'update');
+    // sinon.stub(Product, 'create');
   });
 
   afterEach(function () {
     Product.find.restore();
     Product.findOne.restore();
-    Product.create.restore();
+    Product.update.restore();
+    // Product.create.restore();
   });
 
   describe("List Products", () => {
@@ -132,7 +134,9 @@ describe("Products Controller", () => {
 
       controller.create(req, res);
 
-      sinon.assert.calledWith(res.json, {data: 'Novo Product cadastrado com sucesso.'});
+      sinon.assert.called(Product.save);
+
+      // sinon.assert.calledWith(res.json, {data: 'Novo Product cadastrado com sucesso.'});
 
 
     });
