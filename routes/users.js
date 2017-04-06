@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var bcrypt = require('bcryptjs');
 
-var sg = require('sendgrid').SendGrid("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");
+var sg = require('sendgrid').SendGrid("API_KEY_HERE");
 var helper = require('sendgrid').mail;
 
 router.post('/', function(req, res) {
